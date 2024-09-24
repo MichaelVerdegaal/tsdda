@@ -3,7 +3,7 @@ import numpy as np
 
 def frequency_masking(
     signal: np.ndarray,
-    mask_rate: float = 0.5,
+    mask_rate: float = 0.2,
     clip_min: float | int | None = None,
     clip_max: float | int | None = None,
     offset: float = 0.0,
@@ -42,7 +42,7 @@ def frequency_masking(
     signal_f = np.fft.rfft(signal)
 
     # Create random mask
-    mask = np.random.rand(len(signal_f)) >= mask_rate
+    mask = np.random.rand(len(signal_f)) < mask_rate
 
     # Apply mask
     masked_signal_f = signal_f * mask
@@ -92,24 +92,25 @@ def frequency_mixing(
     Raises:
         ValueError: If the input signals are not 1D numpy arrays of the same length,
                     if forecast_horizon is invalid, or if mix_rate is not
-                    between 0 and 1.
+                    between 0 and 0.5.
     """
     if signal1.ndim != 1 or signal2.ndim != 1:
         raise ValueError("Input signals must be 1D numpy arrays.")
     if len(signal1) != len(signal2):
         raise ValueError("Input signals must have the same length.")
-    if not 0 <= mix_rate <= 1:
-        raise ValueError("mix_rate must be between 0 and 1")
+    if not 0 < mix_rate <= 0.5:
+        raise ValueError("mix_rate must be between 0 and 0.5")
 
     # Convert to frequency domain
     signal1_f = np.fft.rfft(signal1)
     signal2_f = np.fft.rfft(signal2)
 
-    # Create mixing mask
-    mix_mask = np.random.rand(len(signal1_f)) < mix_rate
+    # Create mixing masks
+    mask1 = np.random.rand(len(signal1_f)) < mix_rate
+    mask2 = np.bitwise_invert(mask1)
 
     # Mix frequency components
-    mixed_signal_f = np.where(mix_mask, signal2_f, signal1_f)
+    mixed_signal_f = signal1_f * mask1 + signal2_f * mask2
 
     # Convert back to time domain
     augmented_signal = np.fft.irfft(mixed_signal_f, n=len(signal1))
