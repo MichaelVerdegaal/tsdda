@@ -16,7 +16,7 @@ implementations.
 
 ## Techniques
 
-- [FrAug (10.48550/arXiv.2302.09292)](https://arxiv.org/abs/2302.09292):
+- [FrAug (10.48550/arXiv.2302.09292)](https://arxiv.org/abs/2302.09292)
   - Frequency Masking
   - Frequency Mixing
 - [Dominant Shuffle (10.48550/arXiv.2405.16456)](https://arxiv.org/abs/2405.16456v1)
@@ -37,3 +37,12 @@ augmented_signal_2 = frequency_mixing(signal, signal_2, forecast_horizon=12)
 # Example: Dominant Shuffle
 augmented_signal_3 = dominant_shuffle(signal)
 ```
+
+## TODO
+
+- Frequency Mixing fails if 1 of the signals contains NaN values
+- Better input validation
+- Allow for more input types?
+- Add post-processing features, to improve augmentations
+  - Modify amplitude
+  - Offset presets (i.e. calculate median/mean offset for the user)
