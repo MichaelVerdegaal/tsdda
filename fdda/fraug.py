@@ -3,7 +3,6 @@ import numpy as np
 
 def frequency_masking(
     signal: np.ndarray,
-    forecast_horizon: int,
     mask_rate: float = 0.5,
     clip_min: float | int | None = None,
     clip_max: float | int | None = None,
@@ -19,8 +18,6 @@ def frequency_masking(
 
     Args:
         signal: A 1D numpy array representing the time series signal.
-        forecast_horizon: An integer specifying the number of time steps
-                          in the forecast horizon.
         mask_rate: The rate at which frequency components are masked. Should be
          between 0 and 1. Default is 0.5.
         clip_min: Clip signal to a minimum value. If None then nothing happens.
@@ -38,8 +35,6 @@ def frequency_masking(
     """
     if signal.ndim != 1:
         raise ValueError("Input signal must be a 1D numpy array.")
-    if forecast_horizon < 0 or forecast_horizon >= len(signal):
-        raise ValueError("Invalid forecast_horizon.")
     if not 0 <= mask_rate <= 1:
         raise ValueError("mask_rate must be between 0 and 1")
 
@@ -68,7 +63,6 @@ def frequency_masking(
 def frequency_mixing(
     signal1: np.ndarray,
     signal2: np.ndarray,
-    forecast_horizon: int,
     mix_rate: float = 0.5,
     clip_min: float | int | None = None,
     clip_max: float | int | None = None,
@@ -85,8 +79,6 @@ def frequency_mixing(
     Args:
         signal1: A 1D numpy array representing the first time series signal.
         signal2: A 1D numpy array representing the second time series signal.
-        forecast_horizon: An integer specifying the number of time steps
-                          in the forecast horizon.
         mix_rate: The rate at which frequency components are mixed from signal2.
                   Should be between 0 and 1. Default is 0.5.
         clip_min: Clip signal to a minimum value. If None then nothing happens.
@@ -106,8 +98,6 @@ def frequency_mixing(
         raise ValueError("Input signals must be 1D numpy arrays.")
     if len(signal1) != len(signal2):
         raise ValueError("Input signals must have the same length.")
-    if forecast_horizon < 0 or forecast_horizon >= len(signal1):
-        raise ValueError("Invalid forecast_horizon.")
     if not 0 <= mix_rate <= 1:
         raise ValueError("mix_rate must be between 0 and 1")
 
