@@ -27,11 +27,11 @@ from fdda import frequency_masking, frequency_mixing, dominant_shuffle
 
 # Example: Frequency Masking
 signal = ...
-augmented_signal = frequency_masking(signal, forecast_horizon=12)
+augmented_signal = frequency_masking(signal)
 
 # Example: Frequency Mixing
 signal_2 = ...
-augmented_signal_2 = frequency_mixing(signal, signal_2, forecast_horizon=12)
+augmented_signal_2 = frequency_mixing(signal, signal_2)
 
 # Example: Dominant Shuffle
 augmented_signal_3 = dominant_shuffle(signal)
