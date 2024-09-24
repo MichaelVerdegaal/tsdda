@@ -1,14 +1,13 @@
 # python-fdda
 
 This package implements Frequency Domain Data Augmentation (FDDA) methods in Python
-using numpy.
+using NumPy.
 
 FDDA is an augmentation technique used to enhance and diversify your training dataset,
-done by manipulating the frequency components of signals. This package specifically
-focused on signals in the time-series domain.
+done by manipulating the frequency components of (time-series) signals.
 
 The motivation for this package is that i desired a library that could be used
-without much effort, and with minimal dependencies. For all of our current methods
+without much effort, and with minimal dependencies. All of our current methods have
 implementations are available, but they tend to require Pytorch and/or are designed
 to be injected during the training process, making them less broadly applicable. This
 package solves this, at the cost of being slightly less faithful to the proposed
