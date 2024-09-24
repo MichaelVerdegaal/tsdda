@@ -32,18 +32,17 @@ def dominant_shuffle(
     # Perform rfft
     signal_f = np.fft.rfft(signal, axis=0)
 
-    # Identify top-k dominant frequencies (excluding DC component)
-    magnitude = np.abs(signal_f[1:])  # Exclude DC component
-    topk_indices = (
-        np.argsort(magnitude, axis=0)[-rate:] + 1
-    )  # +1 to account for excluded DC
+    # Identify top-k dominant frequencies
+    magnitude = np.abs(signal_f[1:])
+    topk_indices = np.argsort(magnitude, axis=0)[-int(rate) :, :] + 1
 
     # Shuffle dominant frequencies for each feature
     new_signal_f = signal_f.copy()
     for i in range(features):
-        indices = topk_indices[:, i]
-        random_indices = np.random.permutation(rate)
-        new_signal_f[indices, i] = signal_f[indices[random_indices], i]
+        for j in range(topk_indices.shape[0]):
+            idx = topk_indices[j, i]
+            random_idx = np.random.choice(topk_indices[:, i])
+            new_signal_f[idx, i] = signal_f[random_idx, i]
 
     # Convert back to time domain
     augmented_signal = np.fft.irfft(new_signal_f, n=time_steps, axis=0)
