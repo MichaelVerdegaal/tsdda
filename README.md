@@ -45,3 +45,5 @@ augmented_signal_3 = dominant_shuffle(signal)
 - Add post-processing features, to improve augmentations
   - Modify amplitude
   - Offset presets (i.e. calculate median/mean offset for the user)
+- Consider [STAug](https://arxiv.org/abs/2303.14254)
+- Consider [Wave-Mask/Mix](https://arxiv.org/abs/2408.10951)
