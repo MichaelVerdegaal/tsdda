@@ -1,0 +1,39 @@
+# python-fdda
+
+This package implements Frequency Domain Data Augmentation (FDDA) methods in Python
+using numpy.
+
+FDDA is an augmentation technique used to enhance and diversify your training dataset,
+done by manipulating the frequency components of signals. This package specifically
+focused on signals in the time-series domain.
+
+The motivation for this package is that i desired a library that could be used
+without much effort, and with minimal dependencies. For all of our current methods
+implementations are available, but they tend to require Pytorch and/or are designed
+to be injected during the training process, making them less broadly applicable. This
+package solves this, at the cost of being slightly less faithful to the proposed
+implementations.
+
+## Techniques
+
+- [FrAug (10.48550/arXiv.2302.09292)](https://arxiv.org/abs/2302.09292):
+  - Frequency Masking
+  - Frequency Mixing
+- [Dominant Shuffle (10.48550/arXiv.2405.16456)](https://arxiv.org/abs/2405.16456v1)
+
+## Usage
+
+```python
+from fdda import frequency_masking, frequency_mixing, dominant_shuffle
+
+# Example: Frequency Masking
+signal = ...
+augmented_signal = frequency_masking(signal, forecast_horizon=12)
+
+# Example: Frequency Mixing
+signal_2 = ...
+augmented_signal_2 = frequency_mixing(signal, signal_2, forecast_horizon=12)
+
+# Example: Dominant Shuffle
+augmented_signal_3 = dominant_shuffle(signal)
+```
