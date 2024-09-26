@@ -15,10 +15,13 @@ implementations.
 
 ## Techniques
 
-- [FrAug (10.48550/arXiv.2302.09292)](https://arxiv.org/abs/2302.09292)
+- [STAug](https://doi.org/10.48550/arXiv.2303.14254)
+  - Frequency-domain augmentation
+  - Time-domain augmentation
+- [FrAug](https://doi.org/10.48550/arXiv.2302.09292)
   - Frequency Masking
   - Frequency Mixing
-- [Dominant Shuffle (10.48550/arXiv.2405.16456)](https://arxiv.org/abs/2405.16456v1)
+- [Dominant Shuffle](https://doi.org/10.48550/arXiv.2405.16456)
 
 ## Usage
 
@@ -45,5 +48,4 @@ augmented_signal_3 = dominant_shuffle(signal)
 - Add post-processing features, to improve augmentations
   - Modify amplitude
   - Offset presets (i.e. calculate median/mean offset for the user)
-- Consider [STAug](https://arxiv.org/abs/2303.14254)
 - Consider [Wave-Mask/Mix](https://arxiv.org/abs/2408.10951)
