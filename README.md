@@ -42,6 +42,7 @@ augmented_signal_3 = dominant_shuffle(signal)
 
 ## TODO
 
+- Better naming-scheme (the mixing methods overlap already)
 - Frequency Mixing fails if 1 of the signals contains NaN values
 - Better input validation
 - Allow for more input types?
