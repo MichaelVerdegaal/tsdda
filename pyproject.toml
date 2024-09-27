@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "python-fdda"
-version = "0.3.0"
+version = "0.3.1"
 description = "Frequency Domain Data Augmentation in Python"
 authors = ["Michael Verdegaal <michaelverdegaal@hotmail.nl>"]
 readme = "README.md"
@@ -16,7 +16,7 @@ pandas = "^2.2.3"
 matplotlib = "^3.9.2"
 
 [tool.commitizen]
-version = "0.3.0"
+version = "0.3.1"
 update_changelog_on_bump = true
 major_version_zero = true
 version_files = [

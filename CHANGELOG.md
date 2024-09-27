@@ -1,3 +1,9 @@
+## 0.3.1 (2024-09-27)
+
+### Refactor
+
+- more parameters for staug methods
+
 ## 0.3.0 (2024-09-26)
 
 ### Feat
