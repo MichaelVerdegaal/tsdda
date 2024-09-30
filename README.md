@@ -43,11 +43,10 @@ augmented_signal_3 = dominant_shuffle(signal)
 
 ## TODO
 
-- Better naming-scheme (the mixing methods overlap already)
 - Frequency Mixing fails if 1 of the signals contains NaN values
-- Better input validation
-- Allow for more input types?
-- Add post-processing features, to improve augmentations
+- Standardized input types and dimensions (+validation)
+- Unit-tests
+- Add more post-processing features, to improve augmentations
   - Modify amplitude
   - Offset presets (i.e. calculate median/mean offset for the user)
-- Consider
+- Update docs

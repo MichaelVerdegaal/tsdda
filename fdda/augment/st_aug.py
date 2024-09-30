@@ -7,9 +7,6 @@ def emd_augmentation(
     n_imf: int = 10,
     random_weight_prob: float = 0.5,
     imf_rate: float = 1.0,
-    clip_min: float | int | None = None,
-    clip_max: float | int | None = None,
-    offset: float = 0.0,
 ) -> np.ndarray:
     """
     Apply EMD-based augmentation to the input signal.
@@ -21,9 +18,6 @@ def emd_augmentation(
         n_imf: Maximum number of IMFs to compute. Default is 10.
         random_weight_prob: Probability of using random weights instead of uniform weights.
         imf_rate: Proportion of IMFs to use in reconstruction, similar to rate in dominant_shuffle.
-        clip_min: Minimum value for clipping the output signal.
-        clip_max: Maximum value for clipping the output signal.
-        offset: A float value to offset the signal after augmentation.
 
     Returns:
         A numpy array of the augmented signal, same shape as the input.
@@ -58,13 +52,6 @@ def emd_augmentation(
         # Reconstruct signal with weighted IMFs
         augmented_signal[:, i] = np.sum(weights[:, np.newaxis] * IMF, axis=0)
 
-    # Apply offset
-    augmented_signal += offset
-
-    # Apply clipping if specified
-    if clip_min is not None or clip_max is not None:
-        augmented_signal = np.clip(augmented_signal, clip_min, clip_max)
-
     # Restore original shape
     if len(original_shape) == 1:
         augmented_signal = augmented_signal.flatten()
@@ -77,9 +64,6 @@ def mix_augmentation(
     signal2: np.ndarray,
     alpha: float = 0.5,
     mix_rate: float = 1.0,
-    clip_min: float | int | None = None,
-    clip_max: float | int | None = None,
-    offset: float = 0.0,
 ) -> np.ndarray:
     """
     Apply mixup augmentation to two input signals.
@@ -112,12 +96,5 @@ def mix_augmentation(
     mixed_signal[:mix_length] = (
         lam * signal1[:mix_length] + (1 - lam) * signal2[:mix_length]
     )
-
-    # Apply offset
-    mixed_signal += offset
-
-    # Apply clipping if specified
-    if clip_min is not None or clip_max is not None:
-        mixed_signal = np.clip(mixed_signal, clip_min, clip_max)
 
     return mixed_signal

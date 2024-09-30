@@ -7,9 +7,6 @@ def wave_mask(
     rates: list[float],
     wavelet: str = "db1",
     level: int = 2,
-    clip_min: float | int | None = None,
-    clip_max: float | int | None = None,
-    offset: float = 0.0,
 ) -> np.ndarray:
     """
     Apply wavelet-based masking to input data.
@@ -21,9 +18,6 @@ def wave_mask(
     - rates: List of mask rates for each wavelet level.
     - wavelet: Type of wavelet to use.
     - level: Number of decomposition levels.
-    - clip_min: Minimum value for clipping the output signal.
-    - clip_max: Maximum value for clipping the output signal.
-    - offset: A float value to offset the signal after augmentation.
 
     Returns:
     - A numpy array of the augmented signal, same shape as the input.
@@ -49,13 +43,6 @@ def wave_mask(
         s = pywt.waverec(coeffs, wavelet=wavelet, mode="symmetric")
         s_mask[:, col] = s[:time_steps]
 
-    # Apply offset
-    s_mask += offset
-
-    # Apply clipping if specified
-    if clip_min is not None or clip_max is not None:
-        s_mask = np.clip(s_mask, clip_min, clip_max)
-
     # Restore original shape
     if len(original_shape) == 1:
         s_mask = s_mask.flatten()
@@ -69,9 +56,6 @@ def wave_mix(
     rates: list[float],
     wavelet: str = "db1",
     level: int = 2,
-    clip_min: float | int | None = None,
-    clip_max: float | int | None = None,
-    offset: float = 0.0,
 ) -> np.ndarray:
     """
     Mix two input signals using wavelet transformation.
@@ -83,9 +67,6 @@ def wave_mix(
     - rates: List of mix rates for each wavelet level.
     - wavelet: Type of wavelet to use.
     - level: Number of decomposition levels.
-    - clip_min: Minimum value for clipping the output signal.
-    - clip_max: Maximum value for clipping the output signal.
-    - offset: A float value to offset the signal after augmentation.
 
     Returns:
     - A numpy array of the mixed signal, same shape as the inputs.
@@ -122,13 +103,6 @@ def wave_mix(
         # Reconstruct mixed signal
         s = pywt.waverec(mixed_coeffs, wavelet=wavelet, mode="symmetric")
         s_mixed[:, col] = s[:time_steps]
-
-    # Apply offset
-    s_mixed += offset
-
-    # Apply clipping if specified
-    if clip_min is not None or clip_max is not None:
-        s_mixed = np.clip(s_mixed, clip_min, clip_max)
 
     # Restore original shape
     if len(original_shape) == 1:

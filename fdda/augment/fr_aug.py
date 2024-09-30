@@ -4,9 +4,6 @@ import numpy as np
 def frequency_masking(
     signal: np.ndarray,
     mask_rate: float = 0.2,
-    clip_min: float | int | None = None,
-    clip_max: float | int | None = None,
-    offset: float = 0.0,
 ) -> np.ndarray:
     """
     Apply frequency masking to the input signal.
@@ -20,10 +17,6 @@ def frequency_masking(
         signal: A 1D numpy array representing the time series signal.
         mask_rate: The rate at which frequency components are masked. Should be
          between 0 and 1. Default is 0.5.
-        clip_min: Clip signal to a minimum value. If None then nothing happens.
-        clip_max: Clip signal to a maximum value. If None then nothing happens.
-        offset: A float value to offset the signal after augmentation. Default is 0.0
-         (no offset).
 
     Returns:
         A 1D numpy array of the augmented signal, same length as the input.
@@ -50,13 +43,6 @@ def frequency_masking(
     # Convert back to time domain
     augmented_signal = np.fft.irfft(masked_signal_f, n=len(signal))
 
-    # Apply offset
-    augmented_signal += offset
-
-    # Apply clipping if specified
-    if clip_min is not None or clip_max is not None:
-        augmented_signal = np.clip(augmented_signal, clip_min, clip_max)
-
     return augmented_signal
 
 
@@ -64,9 +50,6 @@ def frequency_mixing(
     signal1: np.ndarray,
     signal2: np.ndarray,
     mix_rate: float = 0.5,
-    clip_min: float | int | None = None,
-    clip_max: float | int | None = None,
-    offset: float = 0.0,
 ) -> np.ndarray:
     """
     Apply frequency mixing to the input signals.
@@ -81,10 +64,6 @@ def frequency_mixing(
         signal2: A 1D numpy array representing the second time series signal.
         mix_rate: The rate at which frequency components are mixed from signal2.
                   Should be between 0 and 1. Default is 0.5.
-        clip_min: Clip signal to a minimum value. If None then nothing happens.
-        clip_max: Clip signal to a maximum value. If None then nothing happens.
-        offset: A float value to offset the signal after augmentation. Default is 0.0
-                (no offset).
 
     Returns:
         A 1D numpy array of the augmented signal, same length as the input.
@@ -114,12 +93,5 @@ def frequency_mixing(
 
     # Convert back to time domain
     augmented_signal = np.fft.irfft(mixed_signal_f, n=len(signal1))
-
-    # Apply offset
-    augmented_signal += offset
-
-    # Apply clipping if specified
-    if clip_min is not None or clip_max is not None:
-        augmented_signal = np.clip(augmented_signal, clip_min, clip_max)
 
     return augmented_signal
