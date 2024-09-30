@@ -40,17 +40,13 @@ def wave_mask(
             signal[:, col], wavelet=wavelet, mode="symmetric", level=level
         )
 
-        S = []
-        for i in range(level + 1):
-            coeffs_array = coeffs[i]
-
-            m = (
-                np.random.uniform(0, 1, coeffs_array.shape)
-                < rates[min(i, len(rates) - 1)]
-            )
-            C = np.where(m, 0, coeffs_array)
-            S.append(C)
-        s = pywt.waverec(S, wavelet=wavelet, mode="symmetric")
+        # Randomly mask coefficients
+        for i in range(1, len(coeffs)):
+            c_i = coeffs[i]
+            selected_rate = rates[min(i, len(rates) - 1)]
+            m = np.random.uniform(0, 1, c_i.shape) < selected_rate
+            coeffs[i] = np.where(m, 0, c_i)
+        s = pywt.waverec(coeffs, wavelet=wavelet, mode="symmetric")
         s_mask[:, col] = s[:time_steps]
 
     # Apply offset
@@ -94,4 +90,48 @@ def wave_mix(
     Returns:
     - A numpy array of the mixed signal, same shape as the inputs.
     """
-    raise NotImplementedError
+    # Check input shapes
+    if signal1.shape != signal2.shape:
+        raise ValueError("Input signals must have the same shape")
+
+    original_shape = signal1.shape
+    if signal1.ndim == 1:
+        signal1 = signal1.reshape(-1, 1)
+        signal2 = signal2.reshape(-1, 1)
+
+    time_steps, num_features = signal1.shape
+    s_mixed = np.empty_like(signal1, dtype=np.float32)
+
+    for col in range(num_features):
+        coeffs1 = pywt.wavedec(
+            signal1[:, col], wavelet=wavelet, mode="symmetric", level=level
+        )
+        coeffs2 = pywt.wavedec(
+            signal2[:, col], wavelet=wavelet, mode="symmetric", level=level
+        )
+
+        # Mix coefficients
+        mixed_coeffs = []
+        for i in range(len(coeffs1)):
+            c1, c2 = coeffs1[i], coeffs2[i]
+            selected_rate = rates[min(i, len(rates) - 1)]
+            mask = np.random.uniform(0, 1, c1.shape) < selected_rate
+            mixed_c = np.where(mask, c1, c2)
+            mixed_coeffs.append(mixed_c)
+
+        # Reconstruct mixed signal
+        s = pywt.waverec(mixed_coeffs, wavelet=wavelet, mode="symmetric")
+        s_mixed[:, col] = s[:time_steps]
+
+    # Apply offset
+    s_mixed += offset
+
+    # Apply clipping if specified
+    if clip_min is not None or clip_max is not None:
+        s_mixed = np.clip(s_mixed, clip_min, clip_max)
+
+    # Restore original shape
+    if len(original_shape) == 1:
+        s_mixed = s_mixed.flatten()
+
+    return s_mixed

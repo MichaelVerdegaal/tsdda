@@ -22,6 +22,7 @@ implementations.
   - Frequency Masking
   - Frequency Mixing
 - [Dominant Shuffle](https://doi.org/10.48550/arXiv.2405.16456)
+- [Wave-Mask/Mix](https://arxiv.org/abs/2408.10951)
 
 ## Usage
 
@@ -49,4 +50,4 @@ augmented_signal_3 = dominant_shuffle(signal)
 - Add post-processing features, to improve augmentations
   - Modify amplitude
   - Offset presets (i.e. calculate median/mean offset for the user)
-- Consider [Wave-Mask/Mix](https://arxiv.org/abs/2408.10951)
+- Consider
