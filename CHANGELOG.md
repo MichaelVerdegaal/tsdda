@@ -1,3 +1,10 @@
+## 0.4.0 (2024-10-03)
+
+### Feat
+
+- wave augs
+- wavemask function
+
 ## 0.3.1 (2024-09-27)
 
 ### Refactor
