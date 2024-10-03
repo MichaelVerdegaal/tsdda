@@ -73,9 +73,6 @@ def mix_augmentation(
         signal2: Second input signal. Must have the same shape as signal1.
         alpha: Parameter for Beta distribution to sample mixing coefficient.
         mix_rate: Proportion of the signal to apply mixing. Default is 1.0 (whole signal).
-        clip_min: Minimum value for clipping the output signal.
-        clip_max: Maximum value for clipping the output signal.
-        offset: A float value to offset the signal after augmentation.
 
     Returns:
         A numpy array of the augmented signal, same shape as the inputs.
