@@ -72,17 +72,17 @@ class SingleSigAugmenter(Augmenter):
         return signal
 
     @staticmethod
-    def d_shuffle(signal: SignalType, rates: list[float]) -> np.ndarray:
+    def d_shuffle(signal: SignalType, rate: int) -> np.ndarray:
         """Execute DShuffle method on single signal.
 
         Args:
             signal: Input signal to be augmented.
-            rates: List of rates for dominant shuffle.
+            rate: Number of top dominant frequencies to shuffle.
 
         Returns:
             The augmented signal.
         """
-        signal = dominant_shuffle(signal, rates)
+        signal = dominant_shuffle(signal, rate)
         return signal
 
     @staticmethod
