@@ -1,12 +1,13 @@
 import numpy as np
 import pywt
 from ..core.base import AugmentationTechnique
+from ..core.types import SignalType
 
 
 class WaveAug(AugmentationTechnique):
     def augment(
         self,
-        signal: np.ndarray,
+        signal: SignalType,
         rates: list[float],
         wavelet: str = "db1",
         level: int = 2,
@@ -24,6 +25,10 @@ class WaveAug(AugmentationTechnique):
         Returns:
         - A numpy array of the augmented signal, same shape as the input.
         """
+        # Input validation
+        signal = self._validate_input(signal)
+
+        # TODO: move to utils
         original_shape = signal.shape
         if signal.ndim == 1:
             signal = signal.reshape(-1, 1)
@@ -53,8 +58,8 @@ class WaveAug(AugmentationTechnique):
 
     def augment_multi(
         self,
-        signal1: np.ndarray,
-        signal2: np.ndarray,
+        signal1: SignalType,
+        signal2: SignalType,
         rates: list[float],
         wavelet: str = "db1",
         level: int = 2,
@@ -72,10 +77,11 @@ class WaveAug(AugmentationTechnique):
         Returns:
             - A numpy array of the mixed signal, same shape as the inputs.
         """
-        # Check input shapes
-        if signal1.shape != signal2.shape:
-            raise ValueError("Input signals must have the same shape")
+        # Input validation
+        signal1 = self._validate_input(signal1)
+        signal2 = self._validate_input(signal2)
 
+        # TODO: move to utils
         original_shape = signal1.shape
         if signal1.ndim == 1:
             signal1 = signal1.reshape(-1, 1)

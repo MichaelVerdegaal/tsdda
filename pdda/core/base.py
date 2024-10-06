@@ -1,8 +1,8 @@
 from abc import ABC, abstractmethod
 import numpy as np
-from typing import TypeAlias
 
-SignalType: TypeAlias = np.ndarray
+from pdda.core.types import SignalType
+from pdda.core.utils import validate_and_convert_input
 
 
 class AugmentationTechnique(ABC):
@@ -18,6 +18,11 @@ class AugmentationTechnique(ABC):
     def augment_multi(self, signals: list[SignalType], **params) -> np.ndarray:
         """Combine multiple signals into one. Default implementation raises NotImplementedError."""
         raise NotImplementedError("This technique does not support signal combination.")
+
+    @staticmethod
+    def _validate_input(signal: SignalType) -> np.ndarray:
+        """Validate and convert input signal."""
+        return validate_and_convert_input(signal)
 
     @staticmethod
     def transform(

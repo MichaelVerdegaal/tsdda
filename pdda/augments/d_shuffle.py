@@ -1,10 +1,11 @@
 import numpy as np
 
 from ..core.base import AugmentationTechnique
+from ..core.types import SignalType
 
 
 class DShuffle(AugmentationTechnique):
-    def augment(self, signal: np.ndarray, rate: int = 4) -> np.ndarray:
+    def augment(self, signal: SignalType, rate: int = 4) -> np.ndarray:
         """Apply dominant frequency shuffling to the input signal.
 
         Args:
@@ -16,6 +17,9 @@ class DShuffle(AugmentationTechnique):
         Returns:
             A numpy array of the augmented signal, same shape as the input.
         """
+        # Input validation
+        signal = self._validate_input(signal)
+
         original_shape = signal.shape
         if signal.ndim == 1:
             signal = signal.reshape(-1, 1)

@@ -29,10 +29,8 @@ class FRAug(AugmentationTechnique):
                         forecast_horizon is invalid, or if mask_rate is not
                         between 0 and 1.
         """
-        if signal.ndim != 1:
-            raise ValueError("Input signal must be a 1D numpy array.")
-        if not 0 <= mask_rate <= 1:
-            raise ValueError("mask_rate must be between 0 and 1")
+        # Input validation
+        signal = self._validate_input(signal)
 
         # Convert to frequency domain
         signal_f = np.fft.rfft(signal)
@@ -69,6 +67,10 @@ class FRAug(AugmentationTechnique):
         Returns:
             A 1D numpy array of the augmented signal, same length as the input.
         """
+        # Input validation
+        signal1 = self._validate_input(signal1)
+        signal2 = self._validate_input(signal2)
+
         # Convert to frequency domain
         signal1_f = np.fft.rfft(signal1)
         signal2_f = np.fft.rfft(signal2)

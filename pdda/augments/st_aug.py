@@ -1,7 +1,8 @@
 import numpy as np
 from PyEMD import EMD
 
-from ..core.base import AugmentationTechnique, SignalType
+from ..core.base import AugmentationTechnique
+from ..core.types import SignalType
 
 
 class STAug(AugmentationTechnique):
@@ -19,16 +20,11 @@ class STAug(AugmentationTechnique):
         Returns:
             np.ndarray: Augmented signal.
         """
-        if self.method == "time":
-            return self._time_domain_aug(signal, **params)
-        elif self.method == "frequency":
-            return self._frequency_domain_aug(signal, **params)
-        else:
-            return self._combined_aug(signal, **params)
+        raise NotImplementedError("This technique is temporarily disabled")
 
     def emd_augmentation(
         self,
-        signal: np.ndarray,
+        signal: SignalType,
         n_imf: int = 10,
         random_weight_prob: float = 0.5,
         imf_rate: float = 1.0,
@@ -85,8 +81,8 @@ class STAug(AugmentationTechnique):
 
     def mix_augmentation(
         self,
-        signal1: np.ndarray,
-        signal2: np.ndarray,
+        signal1: SignalType,
+        signal2: SignalType,
         alpha: float = 0.5,
         mix_rate: float = 1.0,
     ) -> np.ndarray:
@@ -120,15 +116,3 @@ class STAug(AugmentationTechnique):
         )
 
         return mixed_signal
-
-    def _time_domain_aug(self, signal: np.ndarray, **params) -> np.ndarray:
-        # Time domain augmentation implementation
-        pass
-
-    def _frequency_domain_aug(self, signal: np.ndarray, **params) -> np.ndarray:
-        # Frequency domain augmentation implementation
-        pass
-
-    def _combined_aug(self, signal: np.ndarray, **params) -> np.ndarray:
-        # Combined augmentation implementation
-        pass
