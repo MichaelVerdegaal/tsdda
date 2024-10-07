@@ -1,7 +1,6 @@
 import numpy as np
 
-from ..core.base import AugmentationTechnique
-from ..core.types import SignalType
+from pdda.core import AugmentationTechnique, SignalType
 
 
 class DShuffle(AugmentationTechnique):

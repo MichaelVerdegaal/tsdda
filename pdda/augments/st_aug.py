@@ -1,8 +1,7 @@
 import numpy as np
 from PyEMD import EMD
 
-from ..core.base import AugmentationTechnique
-from ..core.types import SignalType
+from pdda.core import AugmentationTechnique, SignalType
 
 
 class STAug(AugmentationTechnique):

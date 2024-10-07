@@ -1,12 +1,12 @@
 import numpy as np
 
-from ..core.base import AugmentationTechnique
+from pdda.core import AugmentationTechnique, SignalType
 
 
 class FRAug(AugmentationTechnique):
     def augment(
         self,
-        signal: np.ndarray,
+        signal: SignalType,
         mask_rate: float = 0.2,
     ) -> np.ndarray:
         """Apply frequency masking to the input signal.
@@ -48,8 +48,8 @@ class FRAug(AugmentationTechnique):
 
     def augment_multi(
         self,
-        signal1: np.ndarray,
-        signal2: np.ndarray,
+        signal1: SignalType,
+        signal2: SignalType,
         mix_rate: float = 0.5,
     ) -> np.ndarray:
         """Apply frequency mixing to the input signals.

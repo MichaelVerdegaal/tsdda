@@ -1,8 +1,8 @@
 from abc import ABC, abstractmethod
 import numpy as np
 
-from pdda.core.types import SignalType
-from pdda.core.utils import validate_and_convert_input
+from .types import SignalType
+from .utils import validate_and_convert_input
 
 
 class AugmentationTechnique(ABC):
