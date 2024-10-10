@@ -1,3 +1,5 @@
+import random
+
 import numpy as np
 from PyEMD import EMD
 
@@ -5,23 +7,11 @@ from pdda.core import AugmentationTechnique, SignalType
 
 
 class STAug(AugmentationTechnique):
-    def __init__(self, method: str = "combined"):
-        self.method = method
+    def __init__(self):
+        super().__init__()
+        self.supports_combination = True
 
-    def augment(self, signal: SignalType, **params) -> np.ndarray:
-        """
-        Apply STAug augmentation to the input signal.
-
-        Args:
-            signal (np.ndarray): Input signal to be augmented.
-            **params: Additional parameters for the augmentation.
-
-        Returns:
-            np.ndarray: Augmented signal.
-        """
-        raise NotImplementedError("This technique is temporarily disabled")
-
-    def emd_augmentation(
+    def augment(
         self,
         signal: SignalType,
         n_imf: int = 10,
@@ -29,7 +19,7 @@ class STAug(AugmentationTechnique):
         imf_rate: float = 1.0,
     ) -> np.ndarray:
         """
-        Apply EMD-based augmentation to the input signal.
+        Apply STAug augmentation to the input signal.
 
         Args:
             signal: A numpy array representing the time series signal.
@@ -78,40 +68,37 @@ class STAug(AugmentationTechnique):
 
         return augmented_signal
 
-    def mix_augmentation(
+    def augment_staug(
         self,
-        signal1: SignalType,
-        signal2: SignalType,
+        signals: list[SignalType],
+        n_imf: int = 10,
+        random_weight_prob: float = 0.5,
+        imf_rate: float = 1.0,
         alpha: float = 0.5,
-        mix_rate: float = 1.0,
-    ) -> np.ndarray:
+    ) -> list[SignalType]:
         """
-        Apply mixup augmentation to two input signals.
+        Apply both frequency and time domain augmentations to a collection of signals.
 
         Args:
-            signal1: First input signal. Shape can be (time_steps,) or (time_steps, features).
-            signal2: Second input signal. Must have the same shape as signal1.
-            alpha: Parameter for Beta distribution to sample mixing coefficient.
-            mix_rate: Proportion of the signal to apply mixing. Default is 1.0 (whole signal).
+            signals: A list of input signals. Each signal can be 1D or 2D numpy array.
+            n_imf: Maximum number of IMFs to compute. Default is 10.
+            random_weight_prob: Probability of using random weights instead of uniform weights.
+            imf_rate: Proportion of IMFs to use in reconstruction, similar to rate in dominant_shuffle.
+            alpha: Parameter for time domain augmentation.
 
         Returns:
-            A numpy array of the augmented signal, same shape as the inputs.
+            A single augmented signal or a list of augmented signals if num_combinations > 1.
         """
-        if signal1.shape != signal2.shape:
-            raise ValueError("Input signals must have the same shape.")
+        # Apply frequency domain augmentation to each signal
+        augmented_signals = [
+            self.augment(signal, n_imf, random_weight_prob, imf_rate)
+            for signal in signals
+        ]
 
-        # Sample mixing coefficient
-        lam = np.random.beta(alpha, alpha)
+        # Apply time domain augmentation to random pairs
+        results = []
+        for _ in range(len(signals)):
+            signal1, signal2 = random.sample(augmented_signals, 2)
+            results.append(self.augment_multi(signal1, signal2, alpha))
 
-        # Determine the portion of the signal to mix
-        mix_length = int(signal1.shape[0] * mix_rate)
-
-        # Initialize mixed signal with signal1
-        mixed_signal = signal1.copy()
-
-        # Apply mixing to the determined portion
-        mixed_signal[:mix_length] = (
-            lam * signal1[:mix_length] + (1 - lam) * signal2[:mix_length]
-        )
-
-        return mixed_signal
+        return results
