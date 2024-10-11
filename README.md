@@ -1,40 +1,50 @@
 # Python-DDA
 
-This package implements Domain Data Augmentation (DDA) methods in Python, for 
-time-series data. 
+This package implements Domain Data Augmentation (DDA) methods in Python, for
+time-series data.
 
-Dataset augmentation is a technique used to create and diversify your dataset, 
-primarily to improve machine learning models. When we're speaking of data 
+Dataset augmentation is a technique used to create and diversify your dataset,
+primarily to improve machine learning models. When we're speaking of data
 augmentation techniques for time-series, we can categorize them into specific categories:
+
 - The time domain, which represents how a signal changes over time
 - The frequency domain, which represents the same singal, but in its underlying frequencies
 
 This package implements augmentation methods for domains, all in NumPy.
-___
-Pre-existing time-series augmentation packages do exist, but (to my awareness) none 
-of them contain the most cutting-edge techniques for augmentation, which is the motivation 
+
+______________________________________________________________________
+
+Pre-existing time-series augmentation packages do exist, but (to my awareness) none
+of them contain the most cutting-edge techniques for augmentation, which is the motivation
 of this library.
 
 This package will be designed with these goals:
-- Easy to expand | It should be easy to implement new techniques into this package, 
-so you can rapidly integrate cutting-edge solutions into your own project.
-- Freedom | The user should have the freedom to make use of these techniques however 
-they want, with the only restraints being the ones that are strictly necessary 
-for to make each technique work. This also means a minimal amount of 
-dependencies (i.e. no PyTorch requirements for your technique if it's not really 
-needed, looking at you here researchers!).
-- Minimalism | The user should be able to rapidly augment their data with a minimal 
-amount of code. This probably means no ML-based augmentations for now, if you're 
-interested in that, see [TSGM](https://github.com/AlexanderVNikitin/tsgm) perhaps.
 
+- Easy to expand | It should be easy to implement new techniques into this package,
+  so you can rapidly integrate cutting-edge solutions into your own project.
+- Freedom | The user should have the freedom to make use of these techniques however
+  they want, with the only restraints being the ones that are strictly necessary
+  for to make each technique work. This also means a minimal amount of
+  dependencies (i.e. no PyTorch requirements for your technique if it's not really
+  needed, looking at you here researchers!).
+- Minimalism | The user should be able to rapidly augment their data with a minimal
+  amount of code. This probably means no ML-based augmentations for now, if you're
+  interested in that, see [TSGM](https://github.com/AlexanderVNikitin/tsgm) perhaps.
+
+This does come with some caveats. For example, the original STAug
+implementation augments series as a part of a neural network training loop,
+splitting the data into a 'train' and 'forecast' set. As we want our implementations
+to be more broadly applicable, we work on the basis here that we input a single
+signal as a whole, and output a single signal as a whole. This slight modification
+stops the techniques from being limited to just neural net forecasting models.
 
 ## Techniques
 
-Techniques will be categorized in two ways, single-augment and dual-augment. Single-augment 
-augmentations input 1 time-series, and will output 1 time-series. Dual augment 
-augmentations input 2 time-series, and output 1 time-series. 
+Techniques will be categorized in two ways, single-augment and dual-augment. Single-augment
+augmentations input 1 time-series, and will output 1 time-series. Dual augment
+augmentations input 2 time-series, and output 1 time-series.
 
-Both time-domain and frequency-domain augmentations can be found in one of these 
+Both time-domain and frequency-domain augmentations can be found in one of these
 categories.
 
 ### Single augmentations
