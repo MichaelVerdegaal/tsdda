@@ -4,6 +4,11 @@ from pdda.core import AugmentationTechnique, SignalType
 
 
 class WaveAug(AugmentationTechnique):
+    def __init__(self):
+        super().__init__()
+        self.name = "WaveAug"
+        self.supports_combination = True
+
     def augment(
         self,
         signal: SignalType,

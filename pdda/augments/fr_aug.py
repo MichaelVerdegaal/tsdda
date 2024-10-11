@@ -4,17 +4,27 @@ from pdda.core import AugmentationTechnique, SignalType
 
 
 class FRAug(AugmentationTechnique):
+    """Frequency Domain Augmentation (FRAug)
+
+    This is an augmentation technique that applies augmentations in both the
+    frequency and the time domain, via EMD decomposition and mixup.
+
+    References:
+        - Paper: https://arxiv.org/abs/2302.09292
+        - Implementation: https://anonymous.4open.science/r/Fraug-more-results-1785/FrAug
+    """
+
+    def __init__(self):
+        super().__init__()
+        self.name = "FRAug"
+        self.supports_combination = True
+
     def augment(
         self,
         signal: SignalType,
         mask_rate: float = 0.2,
     ) -> np.ndarray:
-        """Apply frequency masking to the input signal.
-
-        This function converts the input signal to the frequency domain,
-        randomly masks some frequency components, and then converts
-        the signal back to the time domain. It treats the last 'forecast_horizon'
-        points as the forecasting horizon.
+        """Applies FRAug frequency-masking augmentation
 
         Args:
             signal: A 1D numpy array representing the time series signal.
@@ -52,7 +62,7 @@ class FRAug(AugmentationTechnique):
         signal2: SignalType,
         mix_rate: float = 0.5,
     ) -> np.ndarray:
-        """Apply frequency mixing to the input signals.
+        """Applies FRAug frequency mixing augmentation
 
         This function converts both input signals to the frequency domain,
         mixes their frequency components based on the mix_rate, and then converts

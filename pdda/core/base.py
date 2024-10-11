@@ -8,6 +8,7 @@ from .utils import validate_and_convert_input
 class AugmentationTechnique(ABC):
     """Base class for all augmentation techniques."""
 
+    name = "Augmentation Technique"
     supports_combination = False
 
     @abstractmethod

@@ -4,6 +4,10 @@ from pdda.core import AugmentationTechnique, SignalType
 
 
 class DShuffle(AugmentationTechnique):
+    def __init__(self):
+        super().__init__()
+        self.name = "Dominant Shuffle"
+
     def augment(self, signal: SignalType, rate: int = 4) -> np.ndarray:
         """Apply dominant frequency shuffling to the input signal.
 

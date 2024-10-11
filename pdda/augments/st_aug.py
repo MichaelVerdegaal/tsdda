@@ -19,6 +19,7 @@ class STAug(AugmentationTechnique):
 
     def __init__(self):
         super().__init__()
+        self.name = "STAug"
         self.supports_combination = True
 
     def augment(
