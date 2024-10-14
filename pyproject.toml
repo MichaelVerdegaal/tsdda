@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "tsdda"
-version = "0.4.0"
+version = "1.0.0"
 description = "Time Series Domain Data Augmentation"
 authors = ["Michael Verdegaal <michaelverdegaal@hotmail.nl>"]
 readme = "README.md"
@@ -17,9 +17,9 @@ pandas = "^2.2.3"
 matplotlib = "^3.9.2"
 
 [tool.commitizen]
-version = "0.4.0"
+version = "1.0.0"
 update_changelog_on_bump = true
-major_version_zero = true
+major_version_zero = false
 version_files = [
     "pyproject.toml:^version"
 ]

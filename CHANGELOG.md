@@ -1,3 +1,19 @@
+## 1.0.0 (2024-10-14)
+
+### Fix
+
+- missing augment_multi function
+- wrong param for d shuffle
+
+### Refactor
+
+- add name attribute to classes
+- correct staug implementation
+- simplify imports
+- return signal in favor of chaining
+- rename project
+- consolidate to base class
+
 ## 0.4.0 (2024-10-03)
 
 ### Feat
