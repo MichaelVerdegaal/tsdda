@@ -5,7 +5,7 @@ time-series data.
 
 Dataset augmentation is a technique used to create and diversify your dataset,
 primarily to improve machine learning models. When we're speaking of data
-augmentation techniques for time-series, we can categorize them into specific categories:
+augmentation techniques for time-series, we can categorize them into specific categories (domains):
 
 - The time domain, which represents how a signal changes over time
 - The frequency domain, which represents the same singal, but in its underlying frequencies
@@ -40,39 +40,31 @@ stops the techniques from being limited to just neural net forecasting models.
 
 ## Techniques
 
-Techniques will be categorized in two ways, single-augment and dual-augment. Single-augment
-augmentations input 1 time-series, and will output 1 time-series. Dual augment
-augmentations input 2 time-series, and output 1 time-series.
+Although a generalization, the techniques can be categorized based
+on in which domains they have an implementation available right now. The time domain, the frequency domain, or a combination of both.
 
-Both time-domain and frequency-domain augmentations can be found in one of these
-categories.
-
-### Single augmentations
-
-- [STAug](https://doi.org/10.48550/arXiv.2303.14254) - Spectrum augmentation
-- [FrAug](https://doi.org/10.48550/arXiv.2302.09292) - Frequency masking
-- [Dominant Shuffle](https://doi.org/10.48550/arXiv.2405.16456)
-- [Wave-aug](https://arxiv.org/abs/2408.10951) - Wavemask
-
-### Dual augmentations
-
-- [STAug](https://doi.org/10.48550/arXiv.2303.14254) - Time augmentation
-- [FrAug](https://doi.org/10.48550/arXiv.2302.09292) - Frequency mixing
-- [Wave-aug](https://arxiv.org/abs/2408.10951) - Wavemix
+| Technique                              | Time domain | Freq domain | Time-freq domain |
+|----------------------------------------|-------------|-------------|------------------|
+| [STAug](pdda/augments/st_aug.py)       | Yes         | Yes         | Yes              |
+| [FRAug](pdda/augments/fr_aug.py)       | Yes         | Yes         | Yes              |
+| [DShuffle](pdda/augments/d_shuffle.py) | No          | Yes         | No               |
+| [WaveAug](pdda/augments/wave_aug.py)   | Yes         | Yes         | No               |
 
 ## Usage
 
 ```python
-# todo
+from pdda import STAug
+
+# Create augmenter class
+augmenter = STAug()
+
+# Apply augmentation
+my_signal = ...  # your list or numpy array
+augmented_signal = augmenter.augment(my_signal)
+
+# (Optional) Post-process augmented signal
+augmented_signal = augmenter.transform(augmented_signal, 
+                                       clip_min=0,
+                                       clip_max=1000,
+                                       offset=100)
 ```
-
-## TODO
-
-- Frequency Mixing fails if 1 of the signals contains NaN values
-- Make into a proper package (code-structure, PyPI)
-- Standardized input types and dimensions (+validation)
-- Unit-tests
-- Add more post-processing features, to improve augmentations
-  - Modify amplitude
-  - Offset presets (i.e. calculate median/mean offset for the user)
-- Update docs
