@@ -4,6 +4,19 @@ from pdda.core import AugmentationTechnique, SignalType
 
 
 class DShuffle(AugmentationTechnique):
+    """Dominant shuffle
+
+    This is an augmentation technique in the frequency domain. It is based on the
+    concept that existing augmentation techniques in the frequency domain can be
+    enhanced by certain modifications. Namely: preserving dominant frequencies,
+    and shuffling being superior over other perturbation methods.
+
+    References:
+        - Paper: https://arxiv.org/abs/2405.16456
+        - Implementation: https://github.com/zuojie2024/dominant-shuffle
+
+    """
+
     def __init__(self):
         super().__init__()
         self.name = "Dominant Shuffle"

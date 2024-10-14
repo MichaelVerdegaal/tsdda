@@ -4,6 +4,16 @@ from pdda.core import AugmentationTechnique, SignalType
 
 
 class WaveAug(AugmentationTechnique):
+    """Wavelet augmentation
+
+    This is an augmentation technique that applies augmentations in both the
+    frequency and the time domain, via wavelet decomposition and mixup.
+
+    References:
+        - Paper: https://www.arxiv.org/abs/2408.10951
+        - Implementation: https://github.com/jafarbakhshaliyev/Wave-Augs
+    """
+
     def __init__(self):
         super().__init__()
         self.name = "WaveAug"

@@ -9,6 +9,10 @@ class FRAug(AugmentationTechnique):
     This is an augmentation technique that applies augmentations in both the
     frequency and the time domain, via EMD decomposition and mixup.
 
+    The authors have tested approaches where frequency masking and mixing is applied
+    together, and masking to keep only the dominant frequencies, but reportedly
+    this did not have any major improvement. Therefore, this has been left out.
+
     References:
         - Paper: https://arxiv.org/abs/2302.09292
         - Implementation: https://anonymous.4open.science/r/Fraug-more-results-1785/FrAug
