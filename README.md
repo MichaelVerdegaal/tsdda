@@ -7,8 +7,8 @@ primarily to improve machine learning models. When we're speaking of data
 augmentation techniques for time series, we can broadly categorize them into specific categories (domains):
 
 - The time domain, which represents how a signal changes over time
-- The frequency domain, which represents the same singal, but in its underlying frequencies
-- The time-frequency domain, where we use both the time and the frequency domain representation of the signal.
+- The frequency domain, which represents the same signal, but in its underlying frequencies
+- The time-frequency domain, where we use both time and frequency domain representation of the signal
 
 ______________________________________________________________________
 
