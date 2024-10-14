@@ -3,7 +3,7 @@ import random
 import numpy as np
 from PyEMD import EMD
 
-from pdda.core import AugmentationTechnique, SignalType
+from tsdda.core import AugmentationTechnique, SignalType
 
 
 class STAug(AugmentationTechnique):

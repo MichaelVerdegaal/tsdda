@@ -1,7 +1,7 @@
 [tool.poetry]
-name = "python-dda"
+name = "tsdda"
 version = "0.4.0"
-description = "Domain Data Augmentation for time-series data"
+description = "Time Series Domain Data Augmentation"
 authors = ["Michael Verdegaal <michaelverdegaal@hotmail.nl>"]
 readme = "README.md"
 package-mode = false

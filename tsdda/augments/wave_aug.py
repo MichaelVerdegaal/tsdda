@@ -1,6 +1,6 @@
 import numpy as np
 import pywt
-from pdda.core import AugmentationTechnique, SignalType
+from tsdda.core import AugmentationTechnique, SignalType
 
 
 class WaveAug(AugmentationTechnique):
