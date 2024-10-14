@@ -1,8 +1,7 @@
-
 [tool.poetry]
-name = "python-fdda"
+name = "tsdda"
 version = "0.4.0"
-description = "Frequency Domain Data Augmentation in Python"
+description = "Time Series Domain Data Augmentation"
 authors = ["Michael Verdegaal <michaelverdegaal@hotmail.nl>"]
 readme = "README.md"
 package-mode = false
