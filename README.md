@@ -46,7 +46,7 @@ on in which domains they have an implementation available right now. The time do
 | Technique                              | Time domain | Freq domain | Time-freq domain |
 |----------------------------------------|-------------|-------------|------------------|
 | [STAug](pdda/augments/st_aug.py)       | Yes         | Yes         | Yes              |
-| [FRAug](pdda/augments/fr_aug.py)       | Yes         | Yes         | Yes              |
+| [FRAug](pdda/augments/fr_aug.py)       | Yes         | Yes         | No               |
 | [DShuffle](pdda/augments/d_shuffle.py) | No          | Yes         | No               |
 | [WaveAug](pdda/augments/wave_aug.py)   | Yes         | Yes         | No               |
 
